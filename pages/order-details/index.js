@@ -51,33 +51,37 @@ Page({
         })
       }
     },
-    async toPayTap() {
-      // 立即支付
-      let res = await WXAPI.userAmount(wx.getStorageSync('token'))
-      if (res.code != 0) {
-        wx.showToast({
-          title: res.msg,
-          icon: 'none'
-        })
-        return
-      }
-      const balance = res.data.balance // 当前用户的余额
-      let needPay = this.data.orderDetail.orderInfo.amountReal*1 - balance*1
-      needPay = needPay.toFixed(2)
-      if (needPay <= 0) {
-        // 余额足够
-        WXAPI.orderPay(wx.getStorageSync('token'), this.data.orderDetail.orderInfo.id).then(res => {
-          wx.showToast({
-            title: '支付成功',
-            icon: 'success'
+    async goPayOrder() {
+        const _this = this
+        let res = 0 ;
+         const nextAction = {
+          type: 9,
+          orderId: this.data.orderDetail.orderInfo.id
+        }
+        const postData = {
+          money: this.data.orderDetail.orderInfo.amountReal*1,
+          remark: "堂食买单",
+          nextAction: JSON.stringify(nextAction)
+        }
+        res = await WXAPI.wxpay(postData)
+        if (res.code != 0) {
+          wx.showModal({
+            title: '出错了',
+            content: JSON.stringify(res),
+            showCancel: false
           })
-          this.orderDetail();
-        })
-      } else {
-        // 微信支付
-        wxpay.wxpay('order', needPay, this.data.orderDetail.orderInfo.id, "/pages/all-orders/index");
-      }
-    },
+      
+        }
+          wx.showToast({
+            title: '买单成功'
+          })
+          _this.setData({
+            paySuccess: true
+          })
+          wx.redirectTo({
+            url: '/pages/all-orders/index',
+          })
+      },
     callshop() {
       wx.makePhoneCall({
         phoneNumber: this.data.shopSubdetail.info.linkPhone,

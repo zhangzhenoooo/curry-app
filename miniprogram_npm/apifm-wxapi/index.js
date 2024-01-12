@@ -95,8 +95,8 @@ module.exports =
 /* eslint-disable */
 // 小程序开发api接口工具包，https://github.com/gooking/wxapi
 // var API_BASE_URL = 'https://api.it120.cc';
-// var API_BASE_URL = 'http://192.168.5.127:8888';
- var API_BASE_URL = 'http://17a72e61.r12.vip.cpolar.cn';     
+var API_BASE_URL = 'http://192.168.5.127:8888';
+//  var API_BASE_URL = 'http://17a72e61.r12.vip.cpolar.cn';     
         
 var subDomain = '-';
 var merchantId = '0';

@@ -44,18 +44,7 @@ Page({
     // token 需要使用买单这个用户的token，而不是当前餐桌的token
     // const code = await AUTH.wxaCode()
     let res = 0 ;
-    
-    // await WXAPI.authorize({
-    //   code
-    // })
-    // if (res.code != 0) {
-    //   wx.showModal({
-    //     title: '出错了',
-    //     content: res.msg,
-    //     showCancel: false
-    //   })
-    //   return
-    // }
+     
     const token = 12341;
     const nextAction = {
       type: 9,
